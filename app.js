@@ -10,7 +10,7 @@ app.get('/', (req, res) => {
   res.send('Welcome to the PostgreSQL and Express.js application!');
 });
 
-// Endpoint to fetch all users from the "members" table
+// Endpoint to fetch all users from the  table
 app.get('/users', async (req, res) => {
   try {
     const result = await dbPool.query(`SELECT * FROM ${process.env.TABLE_NAME}`);
