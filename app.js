@@ -24,6 +24,24 @@ app.get('/users', async (req, res) => {
   }
 });
 
+//endpoint to add a new user to the  table
+app.post('/users', async (req, res) => {
+  const { full_name, email, password } = req.body;
+  try {
+    const result = await dbPool.query(
+      `INSERT INTO ${process.env.TABLE_NAME} (full_name, email, password) VALUES ($1, $2, $3) RETURNING *`,
+      [full_name, email, password]
+    );
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error('Error adding user:', error);
+    res.status(500).json({ 
+        success: false,
+        error: 'Internal Server Error' 
+    });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
