@@ -29,7 +29,7 @@ app.post('/users', async (req, res) => {
   const { full_name, email, password } = req.body;
   try {
     const result = await dbPool.query(
-      `INSERT INTO ${process.env.TABLE_NAME} (full_name, email, password) VALUES ($1, $2, $3) RETURNING *`,
+      `INSERT INTO ${process.env.TABLE_NAME} (full_name, email, password) VALUES ($1, $2, $3) RETURNING full_name, email`,
       [full_name, email, password]
     );
     res.status(201).json(result.rows[0]);
